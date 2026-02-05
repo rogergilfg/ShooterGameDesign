@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor.Rendering;
+using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]private LayerMask groundMask;
 
     Rigidbody rb;
-    bool grounded;
+    [SerializeField] bool grounded;
 
     void Start()
     {
@@ -38,6 +39,18 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity.y,
             move.z * speed
         );
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if(collision.gameObject.tag == "Suelo")
+        {
+            grounded = true;
+        }
+        else
+        {
+            grounded = false;
+        }
     }
 }
 
